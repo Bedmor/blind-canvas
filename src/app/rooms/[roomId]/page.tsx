@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-explicit-any */
 // src/app/rooms/[roomId]/page.tsx
 import { db } from "~/server/db";
 import { auth } from "~/server/auth";
@@ -6,11 +6,11 @@ import { joinRoom } from "~/app/actions";
 import GameRoom from "~/components/GameRoom";
 import { notFound, redirect } from "next/navigation";
 
-export default async function Page({ params }: { params: { roomId: string } }) {
+export default async function Page(props: any) {
+  const { params } = props;
+  const roomId = String(params?.roomId);
   const session = await auth();
   if (!session?.user) redirect("/");
-
-  const { roomId } = params;
 
   await joinRoom(roomId);
 
