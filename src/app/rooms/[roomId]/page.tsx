@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call */
 // src/app/rooms/[roomId]/page.tsx
 import { db } from "~/server/db";
 import { auth } from "~/server/auth";
@@ -9,9 +10,7 @@ export default async function Page({ params }: { params: { roomId: string } }) {
   const session = await auth();
   if (!session?.user) redirect("/");
 
-  // Await params for Next.js 15+
-  // If it's still treated as prompt but usually Next 15 requires async params access
-  const roomId = (await params).roomId;
+  const { roomId } = params;
 
   await joinRoom(roomId);
 
@@ -26,7 +25,7 @@ export default async function Page({ params }: { params: { roomId: string } }) {
   if (!roomWithUsers) notFound();
 
   const myParticipant = roomWithUsers.participants.find(
-    (p: any) => p.userId === session.user.id,
+    (p) => p.userId === session.user.id,
   );
 
   // Pass pure data

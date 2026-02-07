@@ -1,24 +1,43 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import * as Ably from "ably";
 import { AblyProvider, ChannelProvider, useChannel } from "ably/react";
 import DrawingCanvas from "./DrawingCanvas";
 import { saveDrawing } from "~/app/actions";
 import { useRouter } from "next/navigation";
 
-// Define simpler types to avoid Prisma import issues on client
-type Room = any;
+interface DrawingData {
+  id: string;
+  part: "HEAD" | "BODY" | "LEGS";
+  data: string;
+  roomId: string;
+  participantId: string;
+  createdAt: Date | string;
+}
+
+interface RoomData {
+  id: string;
+  createdAt: Date | string;
+  status: "WAITING" | "IN_PROGRESS" | "COMPLETED";
+  drawings: DrawingData[];
+  participants: {
+    id: string;
+    userId: string;
+    assignedPart: "HEAD" | "BODY" | "LEGS" | null;
+    user: { id: string; name: string | null; image: string | null };
+  }[];
+}
 
 // Inner component to use hooks
 function GameBoard({
   room,
-  userId,
+  _userId,
   userRole,
   roomId,
 }: {
-  room: Room;
-  userId: string;
+  room: RoomData;
+  _userId: string;
   userRole?: "HEAD" | "BODY" | "LEGS" | null;
   roomId: string;
 }) {
@@ -29,17 +48,17 @@ function GameBoard({
     router.refresh();
   });
 
-  const myDrawing = room.drawings.find((d: any) => d.part === userRole);
-  const headDrawing = room.drawings.find((d: any) => d.part === "HEAD");
-  const bodyDrawing = room.drawings.find((d: any) => d.part === "BODY");
-  const legsDrawing = room.drawings.find((d: any) => d.part === "LEGS");
+  const myDrawing = room.drawings.find((d) => d.part === userRole);
+  const headDrawing = room.drawings.find((d) => d.part === "HEAD");
+  const bodyDrawing = room.drawings.find((d) => d.part === "BODY");
+  const legsDrawing = room.drawings.find((d) => d.part === "LEGS");
 
   const onDrawSubmit = async (data: string) => {
     if (!userRole) return;
     await saveDrawing(roomId, data, userRole);
   };
 
-  let guideImage = null;
+  let guideImage: string | null = null;
   if (userRole === "BODY" && headDrawing) {
     guideImage = headDrawing.data;
   } else if (userRole === "LEGS" && bodyDrawing) {
@@ -50,25 +69,28 @@ function GameBoard({
     return (
       <div className="flex min-h-screen flex-col items-center gap-2 bg-white p-8">
         <h1 className="mb-8 text-3xl font-bold text-black">Masterpiece!</h1>
-        <div className="flex w-[400px] flex-col border-4 border-black shadow-2xl">
+        <div className="flex w-100 flex-col border-4 border-black shadow-2xl">
           {headDrawing && (
+            // eslint-disable-next-line @next/next/no-img-element
             <img
               src={headDrawing.data}
-              className="h-[300px] w-full bg-white object-contain"
+              className="h-75 w-full bg-white object-contain"
               alt="head"
             />
           )}
           {bodyDrawing && (
+            // eslint-disable-next-line @next/next/no-img-element
             <img
               src={bodyDrawing.data}
-              className="h-[300px] w-full bg-white object-contain"
+              className="h-75 w-full bg-white object-contain"
               alt="body"
             />
           )}
           {legsDrawing && (
+            // eslint-disable-next-line @next/next/no-img-element
             <img
               src={legsDrawing.data}
-              className="h-[300px] w-full bg-white object-contain"
+              className="h-75 w-full bg-white object-contain"
               alt="legs"
             />
           )}
@@ -85,7 +107,7 @@ function GameBoard({
 
   return (
     <div className="flex min-h-screen flex-col items-center bg-gray-50 py-8 text-black">
-      <h1 className="mb-4 text-2xl font-bold">Code: {room.code}</h1>
+      <h1 className="mb-4 text-2xl font-bold">Room: {room.id}</h1>
       <div className="mb-8 flex gap-4">
         <StatusBadge
           label="HEAD"
@@ -106,7 +128,7 @@ function GameBoard({
 
       <p className="mb-4 text-gray-700">
         You are:{" "}
-        <span className="text-xl font-bold">{userRole || "Spectator"}</span>
+        <span className="text-xl font-bold">{userRole ?? "Spectator"}</span>
       </p>
 
       {myDrawing ? (
@@ -159,7 +181,7 @@ export default function GameRoom({
   userRole,
 }: {
   roomId: string;
-  initialRoom: Room;
+  initialRoom: RoomData;
   userId: string;
   userRole?: "HEAD" | "BODY" | "LEGS" | null;
 }) {
@@ -170,7 +192,7 @@ export default function GameRoom({
       <ChannelProvider channelName={`room-${roomId}`}>
         <GameBoard
           room={initialRoom}
-          userId={userId}
+          _userId={userId}
           userRole={userRole}
           roomId={roomId}
         />

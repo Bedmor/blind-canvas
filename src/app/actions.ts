@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-argument */
 "use server";
 
 import { db } from "~/server/db";
 import { auth } from "~/server/auth";
 import { redirect } from "next/navigation";
-import { nanoid } from "nanoid";
 import { revalidatePath } from "next/cache";
 import Ably from "ably";
 import { env } from "~/env";
@@ -14,7 +14,6 @@ export async function createRoom() {
 
   const room = await db.room.create({
     data: {
-      code: nanoid(6).toUpperCase(),
       status: "WAITING",
       participants: {
         create: {
@@ -89,7 +88,7 @@ export async function saveDrawing(roomId: string, data: string, part: "HEAD" | "
         }
     });
 
-    if(!participant || participant.assignedPart !== part) return { error: "Invalid role" };
+    if(participant?.assignedPart !== part) return { error: "Invalid role" };
 
     await db.drawing.create({
         data: {

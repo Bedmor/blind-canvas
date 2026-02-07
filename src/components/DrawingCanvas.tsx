@@ -30,8 +30,8 @@ export default function DrawingCanvas({
     const canvas = canvasRef.current;
     if (!canvas) return { x: 0, y: 0 };
     const rect = canvas.getBoundingClientRect();
-    const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
-    const clientY = "touches" in e ? e.touches[0].clientY : e.clientY;
+    const clientX = "touches" in e ? (e.touches[0]?.clientX ?? 0) : e.clientX;
+    const clientY = "touches" in e ? (e.touches[0]?.clientY ?? 0) : e.clientY;
     return {
       x: clientX - rect.left,
       y: clientY - rect.top,
@@ -77,6 +77,7 @@ export default function DrawingCanvas({
               position: "relative",
             }}
           >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={guideImage}
               alt="Guide"
