@@ -12,15 +12,32 @@ export default async function Page(props: any) {
   const session = await auth();
   if (!session?.user) redirect("/");
 
-  await joinRoom(roomId);
-
-  const roomWithUsers = await db.room.findUnique({
-    where: { id: roomId },
-    include: {
-      participants: { include: { user: true } },
-      drawings: true,
-    },
-  });
+  // Run joinRoom and room data fetch concurrently
+  const [, roomWithUsers] = await Promise.all([
+    joinRoom(roomId),
+    db.room.findUnique({
+      where: { id: roomId },
+      include: {
+        participants: {
+          include: {
+            user: {
+              select: { id: true, name: true, image: true },
+            },
+          },
+        },
+        drawings: {
+          select: {
+            id: true,
+            part: true,
+            data: true,
+            roomId: true,
+            participantId: true,
+            createdAt: true,
+          },
+        },
+      },
+    }),
+  ]);
 
   if (!roomWithUsers) notFound();
 
@@ -28,7 +45,6 @@ export default async function Page(props: any) {
     (p) => p.userId === session.user.id,
   );
 
-  // Pass pure data
   return (
     <GameRoom
       roomId={roomId}

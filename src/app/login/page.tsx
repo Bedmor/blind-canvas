@@ -7,74 +7,86 @@ export default async function LoginPage() {
   if (session?.user) redirect("/rooms");
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-gray-950 p-4">
-      <div className="w-full max-w-md rounded-2xl border border-gray-700 bg-gray-900 p-8 shadow-2xl">
-        {/* Logo / Title */}
-        <div className="mb-8 text-center">
-          <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-linear-to-br from-emerald-500 to-cyan-500">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="white"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="h-10 w-10"
-            >
-              <path d="M12 19c-2.3 0-6.4-.2-8.1-.6-.7-.2-1.2-.7-1.4-1.4-.3-1.1-.5-3.4-.5-5s.2-3.9.5-5c.2-.7.7-1.2 1.4-1.4C5.6 5.2 9.7 5 12 5s6.4.2 8.1.6c.7.2 1.2.7 1.4 1.4.3 1.1.5 3.4.5 5s-.2 3.9-.5 5c-.2.7-.7 1.2-1.4 1.4-1.7.4-5.8.6-8.1.6z" />
-              <path d="M12 12a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-              <path d="M16 17c0-2.2-1.8-4-4-4s-4 1.8-4 4" />
-            </svg>
+    <main className="flex min-h-screen items-center justify-center p-4">
+      {/* Background accent */}
+      <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+        <div className="absolute top-0 left-1/2 h-125 w-125 -translate-x-1/2 rounded-full bg-emerald-500/5 blur-3xl" />
+      </div>
+
+      <div className="animate-fade-in-up relative z-10 w-full max-w-md">
+        <div className="glass-card rounded-2xl border border-white/10 p-8 shadow-2xl">
+          {/* Logo / Title */}
+          <div className="mb-8 text-center">
+            <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-linear-to-br from-emerald-500 to-cyan-500 shadow-lg shadow-emerald-500/20">
+              <svg
+                className="h-8 w-8 text-white"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M12 19l7-7 3 3-7 7-3-3z" />
+                <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" />
+                <path d="M2 2l7.586 7.586" />
+                <circle cx="11" cy="11" r="2" />
+              </svg>
+            </div>
+            <h1 className="bg-linear-to-r from-emerald-400 to-cyan-400 bg-clip-text text-3xl font-extrabold tracking-tight text-transparent">
+              Blind Canvas
+            </h1>
+            <p className="mt-2 text-sm text-gray-500">
+              Sign in to start drawing with friends
+            </p>
           </div>
-          <h1 className="bg-linear-to-r from-emerald-400 to-cyan-400 bg-clip-text text-3xl font-extrabold text-transparent">
-            Kör Kolektif Tuval
-          </h1>
-          <p className="mt-2 text-sm text-gray-400">
-            Sign in to start drawing with friends
+
+          {/* Divider */}
+          <div className="mb-6 border-t border-white/5" />
+
+          {/* How it works */}
+          <div className="stagger-children mb-8 space-y-3">
+            <h2 className="text-center text-xs font-semibold tracking-widest text-gray-500 uppercase">
+              How it works
+            </h2>
+            <div className="animate-fade-in flex items-center gap-3 rounded-xl border border-white/5 bg-white/2 p-3.5">
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-emerald-500/15 text-sm font-bold text-emerald-400">
+                1
+              </span>
+              <p className="text-sm text-gray-400">
+                Player 1 draws the{" "}
+                <strong className="text-gray-300">head</strong>
+              </p>
+            </div>
+            <div className="animate-fade-in flex items-center gap-3 rounded-xl border border-white/5 bg-white/2 p-3.5">
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-cyan-500/15 text-sm font-bold text-cyan-400">
+                2
+              </span>
+              <p className="text-sm text-gray-400">
+                Player 2 draws the{" "}
+                <strong className="text-gray-300">body</strong> (only sees neck
+                lines)
+              </p>
+            </div>
+            <div className="animate-fade-in flex items-center gap-3 rounded-xl border border-white/5 bg-white/2 p-3.5">
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-purple-500/15 text-sm font-bold text-purple-400">
+                3
+              </span>
+              <p className="text-sm text-gray-400">
+                Player 3 draws the{" "}
+                <strong className="text-gray-300">legs</strong> (only sees waist
+                lines)
+              </p>
+            </div>
+          </div>
+
+          {/* Sign In Button */}
+          <SignInButton />
+
+          <p className="mt-6 text-center text-xs text-gray-600">
+            By signing in you agree to have fun drawing weird creatures.
           </p>
         </div>
-
-        {/* Divider */}
-        <div className="mb-6 border-t border-gray-700" />
-
-        {/* How it works */}
-        <div className="mb-8 space-y-3">
-          <h2 className="text-center text-xs font-semibold tracking-wider text-gray-500 uppercase">
-            How it works
-          </h2>
-          <div className="flex items-center gap-3 rounded-lg bg-gray-800 p-3">
-            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-500/20 text-sm font-bold text-emerald-400">
-              1
-            </span>
-            <p className="text-sm text-gray-300">
-              Player 1 draws the <strong>head</strong>
-            </p>
-          </div>
-          <div className="flex items-center gap-3 rounded-lg bg-gray-800 p-3">
-            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-cyan-500/20 text-sm font-bold text-cyan-400">
-              2
-            </span>
-            <p className="text-sm text-gray-300">
-              Player 2 draws the <strong>body</strong> (only sees neck lines)
-            </p>
-          </div>
-          <div className="flex items-center gap-3 rounded-lg bg-gray-800 p-3">
-            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-purple-500/20 text-sm font-bold text-purple-400">
-              3
-            </span>
-            <p className="text-sm text-gray-300">
-              Player 3 draws the <strong>legs</strong> (only sees waist lines)
-            </p>
-          </div>
-        </div>
-
-        {/* Sign In Button */}
-        <SignInButton />
-
-        <p className="mt-6 text-center text-xs text-gray-500">
-          By signing in you agree to have fun drawing weird creatures.
-        </p>
       </div>
     </main>
   );

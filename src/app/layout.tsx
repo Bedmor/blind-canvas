@@ -21,9 +21,9 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${geist.variable}`}>
-      <body className="bg-gray-950 text-white">
+      <body className="noise-bg min-h-screen bg-gray-950 text-white antialiased">
         <Header />
-        <div className="pt-14">{children}</div>
+        <div className="relative z-10 pt-16">{children}</div>
       </body>
     </html>
   );

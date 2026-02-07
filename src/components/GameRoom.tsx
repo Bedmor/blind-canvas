@@ -67,48 +67,76 @@ function GameBoard({
 
   if (room.status === "COMPLETED") {
     return (
-      <div className="flex min-h-screen flex-col items-center gap-2 bg-white p-8">
-        <h1 className="mb-8 text-3xl font-bold text-black">Masterpiece!</h1>
-        <div className="flex w-100 flex-col border-4 border-black shadow-2xl">
-          {headDrawing && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={headDrawing.data}
-              className="h-75 w-full bg-white object-contain"
-              alt="head"
-            />
-          )}
-          {bodyDrawing && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={bodyDrawing.data}
-              className="h-75 w-full bg-white object-contain"
-              alt="body"
-            />
-          )}
-          {legsDrawing && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={legsDrawing.data}
-              className="h-75 w-full bg-white object-contain"
-              alt="legs"
-            />
-          )}
+      <div className="flex min-h-screen flex-col items-center justify-center p-8">
+        <div className="animate-fade-in-up max-w-lg text-center">
+          <h1 className="mb-2 bg-linear-to-r from-emerald-400 to-cyan-400 bg-clip-text text-4xl font-extrabold tracking-tight text-transparent">
+            Masterpiece Complete
+          </h1>
+          <p className="mb-8 text-sm text-gray-500">
+            Your collaborative creature has been revealed
+          </p>
+          <div className="glass-card glow-emerald overflow-hidden rounded-2xl border border-white/10">
+            <div className="flex flex-col">
+              {headDrawing && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={headDrawing.data}
+                  className="h-75 w-full bg-white object-contain"
+                  alt="head"
+                />
+              )}
+              {bodyDrawing && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={bodyDrawing.data}
+                  className="h-75 w-full bg-white object-contain"
+                  alt="body"
+                />
+              )}
+              {legsDrawing && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={legsDrawing.data}
+                  className="h-75 w-full bg-white object-contain"
+                  alt="legs"
+                />
+              )}
+            </div>
+          </div>
+          <button
+            onClick={() => router.push("/rooms")}
+            className="mt-8 inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-6 py-2.5 font-medium text-gray-300 transition-all hover:border-white/20 hover:bg-white/10 hover:text-white"
+          >
+            <svg
+              className="h-4 w-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+              />
+            </svg>
+            Back to Rooms
+          </button>
         </div>
-        <button
-          onClick={() => router.push("/rooms")}
-          className="mt-8 rounded bg-gray-800 px-6 py-2 text-white transition hover:bg-black"
-        >
-          Back to Home
-        </button>
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center bg-gray-50 py-8 text-black">
-      <h1 className="mb-4 text-2xl font-bold">Room: {room.id}</h1>
-      <div className="mb-8 flex gap-4">
+    <div className="flex min-h-screen flex-col items-center px-4 py-10">
+      <div className="mb-6 text-center">
+        <h1 className="mb-1 text-lg font-semibold text-gray-300">
+          Drawing Room
+        </h1>
+        <p className="font-mono text-xs text-gray-600">{room.id}</p>
+      </div>
+
+      <div className="mb-8 flex gap-3">
         <StatusBadge
           label="HEAD"
           isActive={!!headDrawing}
@@ -126,14 +154,30 @@ function GameBoard({
         />
       </div>
 
-      <p className="mb-4 text-gray-700">
-        You are:{" "}
-        <span className="text-xl font-bold">{userRole ?? "Spectator"}</span>
+      <p className="mb-6 text-sm text-gray-500">
+        Your role:{" "}
+        <span className="font-bold text-white">{userRole ?? "Spectator"}</span>
       </p>
 
       {myDrawing ? (
-        <div className="rounded border border-green-200 bg-green-100 p-8 text-green-800">
-          Wait for others to finish...
+        <div className="glass-card animate-fade-in rounded-xl border border-emerald-500/20 px-8 py-6 text-center text-emerald-400">
+          <svg
+            className="animate-pulse-soft mx-auto mb-3 h-8 w-8"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={1.5}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          <p className="font-medium">Your drawing is submitted</p>
+          <p className="mt-1 text-xs text-gray-500">
+            Waiting for others to finish...
+          </p>
         </div>
       ) : userRole === "HEAD" ||
         (userRole === "BODY" && headDrawing) ||
@@ -142,10 +186,23 @@ function GameBoard({
           <DrawingCanvas onSubmit={onDrawSubmit} guideImage={guideImage} />
         </div>
       ) : (
-        <div className="max-w-md rounded border border-yellow-200 bg-yellow-100 p-8 text-center text-yellow-800">
-          {userRole
-            ? "Waiting for the previous part to finish..."
-            : "Room is full."}
+        <div className="glass-card max-w-md rounded-xl border border-amber-500/20 px-8 py-6 text-center text-amber-400">
+          <svg
+            className="animate-pulse-soft mx-auto mb-3 h-8 w-8"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={1.5}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          <p className="font-medium">
+            {userRole ? "Waiting for the previous artist..." : "Room is full"}
+          </p>
         </div>
       )}
     </div>
@@ -163,11 +220,11 @@ function StatusBadge({
 }) {
   return (
     <div
-      className={`rounded-lg border-2 px-4 py-2 font-mono transition-all ${
+      className={`rounded-lg px-4 py-2 font-mono text-sm font-medium tracking-wide transition-all ${
         isActive
-          ? "border-emerald-600 bg-emerald-500 text-white"
-          : "border-gray-300 bg-gray-200 text-gray-500"
-      } ${isMe ? "scale-110 ring-4 ring-blue-400" : ""}`}
+          ? "bg-emerald-500/15 text-emerald-400 ring-1 ring-emerald-500/30"
+          : "bg-white/5 text-gray-600 ring-1 ring-white/10"
+      } ${isMe ? "scale-110 ring-2 ring-cyan-400/50" : ""}`}
     >
       {label}
     </div>
