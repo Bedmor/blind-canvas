@@ -6,34 +6,36 @@ import GameRoom from "~/components/GameRoom";
 import { notFound, redirect } from "next/navigation";
 
 export default async function Page({ params }: { params: { roomId: string } }) {
-    const session = await auth();
-    if (!session?.user) redirect("/"); 
+  const session = await auth();
+  if (!session?.user) redirect("/");
 
-    // Await params for Next.js 15+ 
-    // If it's still treated as prompt but usually Next 15 requires async params access
-    const roomId = (await params).roomId;
-    
-    await joinRoom(roomId);
-    
-    const roomWithUsers = await db.room.findUnique({
-        where: { id: roomId },
-        include: { 
-             participants: { include: { user: true } },
-             drawings: true
-        }
-    });
+  // Await params for Next.js 15+
+  // If it's still treated as prompt but usually Next 15 requires async params access
+  const roomId = (await params).roomId;
 
-    if (!roomWithUsers) notFound();
-    
-    const myParticipant = roomWithUsers.participants.find((p: any) => p.userId === session.user.id);
+  await joinRoom(roomId);
 
-    // Pass pure data
-    return (
-        <GameRoom 
-            roomId={roomId}
-            initialRoom={roomWithUsers}
-            userId={session.user.id}
-            userRole={myParticipant?.assignedPart}
-        />
-    );
+  const roomWithUsers = await db.room.findUnique({
+    where: { id: roomId },
+    include: {
+      participants: { include: { user: true } },
+      drawings: true,
+    },
+  });
+
+  if (!roomWithUsers) notFound();
+
+  const myParticipant = roomWithUsers.participants.find(
+    (p: any) => p.userId === session.user.id,
+  );
+
+  // Pass pure data
+  return (
+    <GameRoom
+      roomId={roomId}
+      initialRoom={roomWithUsers}
+      userId={session.user.id}
+      userRole={myParticipant?.assignedPart}
+    />
+  );
 }

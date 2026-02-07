@@ -10,12 +10,12 @@ export default async function RoomsPage() {
       <p className="text-xl">Draw together without seeing the full picture.</p>
       {session?.user ? (
         <form action={createRoom}>
-          <button className="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-6 rounded-lg transition-colors">
+          <button className="rounded-lg bg-emerald-500 px-6 py-3 font-bold text-white transition-colors hover:bg-emerald-600">
             Yeni Oda Oluştur
           </button>
         </form>
       ) : (
-          <p>Oynamak için lütfen giriş yapın.</p>
+        <p>Oynamak için lütfen giriş yapın.</p>
       )}
     </div>
   );
