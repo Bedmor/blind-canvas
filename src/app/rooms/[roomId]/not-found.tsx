@@ -22,10 +22,10 @@ export default function RoomNotFound() {
         <h1 className="text-5xl font-black tracking-tight text-rose-400">
           404
         </h1>
-        <h2 className="text-xl font-bold text-white">Room Not Found</h2>
+        <h2 className="text-xl font-bold text-white">Oda Bulunamadı</h2>
         <p className="text-sm leading-relaxed text-gray-500">
-          The room you are looking for does not exist, has expired, or you do
-          not have permission to view it.
+          Aradığınız oda mevcut değil, süresi dolmuş veya görüntüleme izniniz
+          yok.
         </p>
         <div>
           <Link
@@ -45,7 +45,7 @@ export default function RoomNotFound() {
                 d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
               />
             </svg>
-            Return Home
+            Ana Sayfaya Dön
           </Link>
         </div>
       </div>

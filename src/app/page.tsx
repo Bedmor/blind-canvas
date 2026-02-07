@@ -16,7 +16,7 @@ export default async function HomePage() {
         {/* Text content */}
         <div className="animate-fade-in-up max-w-xl text-center lg:text-left">
           <p className="mb-4 text-sm font-semibold tracking-widest text-emerald-400 uppercase">
-            Collaborative Drawing Game
+            İşbirlikçi Çizim Oyunu
           </p>
           <h1 className="mb-6 text-4xl leading-tight font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
             <span className="bg-linear-to-r from-emerald-400 via-cyan-400 to-emerald-300 bg-clip-text text-transparent">
@@ -24,9 +24,9 @@ export default async function HomePage() {
             </span>
           </h1>
           <p className="mb-10 text-lg leading-relaxed text-gray-400 sm:text-xl">
-            The digital Exquisite Corpse. Create strange and wonderful creatures
-            with friends. Draw the head, body, or legs &mdash; relying only on
-            the connection lines from the previous artist.
+            Dijital Zarif Ceset oyunu. Arkadaşlarınızla garip ve harika
+            yaratıklar oluşturun. Sadece önceki sanatçının bağlantı çizgilerine
+            bakarak başını, gövdesini veya bacaklarını çizin.
           </p>
 
           <div className="flex flex-col items-center gap-4 sm:flex-row lg:justify-start">
@@ -34,7 +34,7 @@ export default async function HomePage() {
               href={session?.user ? "/rooms" : "/login"}
               className="group relative inline-flex items-center gap-2 overflow-hidden rounded-xl bg-linear-to-r from-emerald-500 to-cyan-500 px-8 py-3.5 font-bold text-white shadow-xl shadow-emerald-500/20 transition-all hover:shadow-emerald-500/30 hover:brightness-110"
             >
-              {session?.user ? "Start Drawing" : "Sign In to Play"}
+              {session?.user ? "Çizime Başla" : "Oynamak İçin Giriş Yap"}
               <svg
                 className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
                 fill="none"

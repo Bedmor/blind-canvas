@@ -37,7 +37,7 @@ export default async function LoginPage() {
               Blind Canvas
             </h1>
             <p className="mt-2 text-sm text-gray-500">
-              Sign in to start drawing with friends
+              Arkadaşlarınla çizmek için giriş yap
             </p>
           </div>
 
@@ -47,15 +47,14 @@ export default async function LoginPage() {
           {/* How it works */}
           <div className="stagger-children mb-8 space-y-3">
             <h2 className="text-center text-xs font-semibold tracking-widest text-gray-500 uppercase">
-              How it works
+              Nasıl çalışır
             </h2>
             <div className="animate-fade-in flex items-center gap-3 rounded-xl border border-white/5 bg-white/2 p-3.5">
               <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-emerald-500/15 text-sm font-bold text-emerald-400">
                 1
               </span>
               <p className="text-sm text-gray-400">
-                Player 1 draws the{" "}
-                <strong className="text-gray-300">head</strong>
+                1. Oyuncu çizer: <strong className="text-gray-300">baş</strong>
               </p>
             </div>
             <div className="animate-fade-in flex items-center gap-3 rounded-xl border border-white/5 bg-white/2 p-3.5">
@@ -63,9 +62,9 @@ export default async function LoginPage() {
                 2
               </span>
               <p className="text-sm text-gray-400">
-                Player 2 draws the{" "}
-                <strong className="text-gray-300">body</strong> (only sees neck
-                lines)
+                2. Oyuncu çizer:{" "}
+                <strong className="text-gray-300">gövde</strong> (sadece boyun
+                çizgilerini görür)
               </p>
             </div>
             <div className="animate-fade-in flex items-center gap-3 rounded-xl border border-white/5 bg-white/2 p-3.5">
@@ -73,9 +72,9 @@ export default async function LoginPage() {
                 3
               </span>
               <p className="text-sm text-gray-400">
-                Player 3 draws the{" "}
-                <strong className="text-gray-300">legs</strong> (only sees waist
-                lines)
+                3. Oyuncu çizer:{" "}
+                <strong className="text-gray-300">bacaklar</strong> (sadece bel
+                çizgilerini görür)
               </p>
             </div>
           </div>
@@ -84,7 +83,8 @@ export default async function LoginPage() {
           <SignInButton />
 
           <p className="mt-6 text-center text-xs text-gray-600">
-            By signing in you agree to have fun drawing weird creatures.
+            Giriş yaparak garip yaratıklar çizip eğlenmeyi kabul etmiş
+            olursunuz.
           </p>
         </div>
       </div>

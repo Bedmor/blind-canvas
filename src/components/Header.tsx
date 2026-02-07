@@ -56,7 +56,7 @@ export default async function Header() {
               href="/login"
               className="rounded-lg bg-linear-to-r from-emerald-500 to-cyan-500 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-emerald-500/20 transition-all hover:shadow-emerald-500/30 hover:brightness-110"
             >
-              Sign In
+              Giriş Yap
             </Link>
           )}
         </div>

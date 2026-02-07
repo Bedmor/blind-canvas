@@ -44,10 +44,10 @@ export default async function RoomsPage() {
       {/* Header */}
       <div className="mb-10 text-center">
         <h1 className="mb-3 bg-linear-to-r from-emerald-400 to-cyan-400 bg-clip-text text-3xl font-bold tracking-tight text-transparent sm:text-4xl">
-          Drawing Rooms
+          Çizim Odaları
         </h1>
         <p className="mx-auto max-w-md text-sm text-gray-500 sm:text-base">
-          Join an active room or create your own
+          Aktif bir odaya katıl veya kendininkini oluştur
         </p>
       </div>
 
@@ -68,7 +68,7 @@ export default async function RoomsPage() {
                 d="M12 4.5v15m7.5-7.5h-15"
               />
             </svg>
-            Create New Room
+            Yeni Oda Oluştur
           </button>
         </form>
       </div>
@@ -92,9 +92,9 @@ export default async function RoomsPage() {
               <circle cx="11" cy="11" r="2" />
             </svg>
           </div>
-          <h3 className="mb-2 text-xl font-bold text-white">No Active Rooms</h3>
+          <h3 className="mb-2 text-xl font-bold text-white">Aktif Oda Yok</h3>
           <p className="text-gray-500">
-            Be the first to create a room and start drawing!
+            Bir oda oluştur ve çizime başlayan ilk sen ol!
           </p>
         </div>
       ) : (
@@ -119,7 +119,7 @@ export default async function RoomsPage() {
                         : "bg-emerald-500/10 text-emerald-400"
                     }`}
                   >
-                    {room.status === "WAITING" ? "Waiting" : "In Progress"}
+                    {room.status === "WAITING" ? "Bekleniyor" : "Devam Ediyor"}
                   </span>
                   <span className="text-sm font-medium text-gray-500">
                     {room._count.participants}/3
@@ -170,6 +170,12 @@ export default async function RoomsPage() {
                     const hasDrawing = room.participants.some(
                       (p) => p.assignedPart === part,
                     );
+                    const label =
+                      part === "HEAD"
+                        ? "BAŞ"
+                        : part === "BODY"
+                          ? "GÖVDE"
+                          : "BACAKLAR";
                     return (
                       <div
                         key={part}
@@ -179,7 +185,7 @@ export default async function RoomsPage() {
                             : "bg-white/3 text-gray-600"
                         }`}
                       >
-                        {part}
+                        {label}
                       </div>
                     );
                   })}
@@ -197,7 +203,7 @@ export default async function RoomsPage() {
                         : "bg-cyan-500/90 text-white shadow-lg shadow-cyan-500/10 hover:bg-cyan-500"
                   }`}
                 >
-                  {isJoined ? "Continue" : isFull ? "Room Full" : "Join Room"}
+                  {isJoined ? "Devam Et" : isFull ? "Oda Dolu" : "Odaya Katıl"}
                 </Link>
 
                 {/* Room ID (small, for copying) */}

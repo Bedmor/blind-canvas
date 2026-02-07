@@ -70,10 +70,10 @@ function GameBoard({
       <div className="flex min-h-screen flex-col items-center justify-center p-8">
         <div className="animate-fade-in-up max-w-lg text-center">
           <h1 className="mb-2 bg-linear-to-r from-emerald-400 to-cyan-400 bg-clip-text text-4xl font-extrabold tracking-tight text-transparent">
-            Masterpiece Complete
+            Şaheser Tamamlandı
           </h1>
           <p className="mb-8 text-sm text-gray-500">
-            Your collaborative creature has been revealed
+            Ortak yaratığınız ortaya çıktı
           </p>
           <div className="glass-card glow-emerald overflow-hidden rounded-2xl border border-white/10">
             <div className="flex flex-col">
@@ -120,7 +120,7 @@ function GameBoard({
                 d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
               />
             </svg>
-            Back to Rooms
+            Odalar&apos;a Dön
           </button>
         </div>
       </div>
@@ -131,7 +131,7 @@ function GameBoard({
     <div className="flex min-h-screen flex-col items-center px-4 py-10">
       <div className="mb-6 text-center">
         <h1 className="mb-1 text-lg font-semibold text-gray-300">
-          Drawing Room
+          Çizim Odası
         </h1>
         <p className="font-mono text-xs text-gray-600">{room.id}</p>
       </div>
@@ -155,8 +155,8 @@ function GameBoard({
       </div>
 
       <p className="mb-6 text-sm text-gray-500">
-        Your role:{" "}
-        <span className="font-bold text-white">{userRole ?? "Spectator"}</span>
+        Rolün:{" "}
+        <span className="font-bold text-white">{userRole ?? "İzleyici"}</span>
       </p>
 
       {myDrawing ? (
@@ -174,9 +174,9 @@ function GameBoard({
               d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
             />
           </svg>
-          <p className="font-medium">Your drawing is submitted</p>
+          <p className="font-medium">Çizimin gönderildi</p>
           <p className="mt-1 text-xs text-gray-500">
-            Waiting for others to finish...
+            Diğerlerinin bitirmesi bekleniyor...
           </p>
         </div>
       ) : userRole === "HEAD" ||
@@ -201,7 +201,7 @@ function GameBoard({
             />
           </svg>
           <p className="font-medium">
-            {userRole ? "Waiting for the previous artist..." : "Room is full"}
+            {userRole ? "Önceki sanatçı bekleniyor..." : "Oda dolu"}
           </p>
         </div>
       )}
@@ -218,6 +218,12 @@ function StatusBadge({
   isActive: boolean;
   isMe: boolean;
 }) {
+  const labelMap: Record<string, string> = {
+    HEAD: "BAŞ",
+    BODY: "GÖVDE",
+    LEGS: "BACAKLAR",
+  };
+
   return (
     <div
       className={`rounded-lg px-4 py-2 font-mono text-sm font-medium tracking-wide transition-all ${
@@ -226,7 +232,7 @@ function StatusBadge({
           : "bg-white/5 text-gray-600 ring-1 ring-white/10"
       } ${isMe ? "scale-110 ring-2 ring-cyan-400/50" : ""}`}
     >
-      {label}
+      {labelMap[label] ?? label}
     </div>
   );
 }

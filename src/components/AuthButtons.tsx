@@ -26,7 +26,7 @@ export function SignInButton() {
           fill="#EA4335"
         />
       </svg>
-      Continue with Google
+      Google ile Devam Et
     </button>
   );
 }
@@ -37,7 +37,7 @@ export function SignOutButton() {
       onClick={() => signOut({ callbackUrl: "/" })}
       className="rounded-lg border border-white/10 bg-white/5 px-3.5 py-1.5 text-sm font-medium text-gray-400 transition-all hover:border-white/20 hover:bg-white/10 hover:text-white"
     >
-      Sign Out
+      Çıkış Yap
     </button>
   );
 }

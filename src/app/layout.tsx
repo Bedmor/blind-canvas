@@ -7,7 +7,7 @@ import Header from "~/components/Header";
 export const metadata: Metadata = {
   title: "Kör Kolektif Tuval - Blind Canvas",
   description:
-    "The digital Exquisite Corpse. Draw together without seeing the full picture.",
+    "Dijital Zarif Ceset oyunu. Resmin tamamını görmeden birlikte çizin.",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
@@ -20,7 +20,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${geist.variable}`}>
+    <html lang="tr" className={`${geist.variable}`}>
       <body className="noise-bg min-h-screen bg-gray-950 text-white antialiased">
         <Header />
         <div className="relative z-10 pt-16">{children}</div>
