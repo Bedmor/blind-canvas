@@ -1,35 +1,34 @@
 import Link from "next/link";
+import { auth } from "~/server/auth";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const session = await auth();
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
-        <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
-          Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
+    <main className="flex min-h-screen flex-col items-center justify-center bg-gray-950 p-4 text-white">
+      <div className="max-w-2xl rounded-2xl border border-gray-700 bg-gray-800 p-8 text-center shadow-xl">
+        <h1 className="mb-6 bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-5xl font-extrabold text-transparent">
+          Kör Kolektif Tuval
         </h1>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
+        <p className="mb-8 text-xl leading-relaxed text-gray-300">
+          The digital "Exquisite Corpse". Create strange and wonderful creatures
+          with friends. Draw the head, body, or legs relying only on the
+          connection lines from the previous artist.
+        </p>
+
+        <div className="flex justify-center gap-4">
           <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-            href="https://create.t3.gg/en/usage/first-steps"
-            target="_blank"
+            href="/rooms"
+            className="transform rounded-full bg-emerald-500 px-8 py-3 font-bold text-white transition-all hover:scale-105 hover:bg-emerald-600"
           >
-            <h3 className="text-2xl font-bold">First Steps →</h3>
-            <div className="text-lg">
-              Just the basics - Everything you need to know to set up your
-              database and authentication.
-            </div>
+            {session?.user ? "Play Now" : "Enter to Login/Play"}
           </Link>
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-            href="https://create.t3.gg/en/introduction"
-            target="_blank"
-          >
-            <h3 className="text-2xl font-bold">Documentation →</h3>
-            <div className="text-lg">
-              Learn more about Create T3 App, the libraries it uses, and how to
-              deploy it.
-            </div>
-          </Link>
+        </div>
+
+        <div className="mt-12 grid grid-cols-3 gap-4 opacity-50">
+          <div className="h-20 animate-pulse rounded bg-gray-700"></div>
+          <div className="h-20 animate-pulse rounded bg-gray-700 delay-75"></div>
+          <div className="h-20 animate-pulse rounded bg-gray-700 delay-150"></div>
         </div>
       </div>
     </main>

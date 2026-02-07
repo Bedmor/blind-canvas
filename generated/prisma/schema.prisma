@@ -56,14 +56,15 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String        @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String?       @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
   posts         Post[]
+  participants  Participant[]
 }
 
 model VerificationToken {
@@ -72,4 +73,53 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Room {
+  id        String     @id @default(cuid())
+  createdAt DateTime   @default(now())
+  status    GameStatus @default(WAITING)
+
+  participants Participant[]
+  drawings     Drawing[]
+}
+
+model Participant {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+  roomId String
+  room   Room   @relation(fields: [roomId], references: [id])
+
+  assignedPart BodyPart?
+  joinedAt     DateTime  @default(now())
+
+  drawings Drawing[]
+
+  @@unique([userId, roomId])
+}
+
+model Drawing {
+  id            String      @id @default(cuid())
+  roomId        String
+  room          Room        @relation(fields: [roomId], references: [id])
+  participantId String
+  participant   Participant @relation(fields: [participantId], references: [id])
+
+  part BodyPart
+  data String // SVG path data
+
+  createdAt DateTime @default(now())
+}
+
+enum GameStatus {
+  WAITING
+  IN_PROGRESS
+  COMPLETED
+}
+
+enum BodyPart {
+  HEAD
+  BODY
+  LEGS
 }
